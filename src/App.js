@@ -1,14 +1,14 @@
-import { createContext, useState ,useEffect } from 'react';
-import './App.css';
-import Board from './components/Board';
-import Keyboard from './components/Keyboard';
-import GameOver from './components/GameOver';
-import { boardDefault, generateWordSet } from './Words';
+import "./App.css";
+import Board from "./components/Board";
+import Keyboard from "./components/Keyboard";
+import { boardDefault, generateWordSet } from "./Words";
+import React, { useState, createContext, useEffect } from "react";
+import GameOver from "./components/GameOver";
 
 export const AppContext = createContext();
 
 function App() {
-  const [board, setBoard] = useState(boardDefault)
+  const [board, setBoard] = useState(boardDefault);
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0, letter: 0 });
   const [wordSet, setWordSet] = useState(new Set());
   const [correctWord, setCorrectWord] = useState("");
@@ -27,6 +27,7 @@ function App() {
 
   const onEnter = () => {
     if (currAttempt.letter !== 5) return;
+
     let currWord = "";
     for (let i = 0; i < 5; i++) {
       currWord += board[currAttempt.attempt][i];
@@ -67,22 +68,34 @@ function App() {
     });
   };
 
-
   return (
     <div className="App">
-      {/* Navbar  */}
+
       <nav>
         <h1>Wordle</h1>
       </nav>
 
-      <AppContext.Provider value={{ board, setBoard, currAttempt, setCurrAttempt, correctWord, onSelectLetter, onDelete, onEnter, setDisabledLetters, disabledLetters, gameOver, }}>
+      <AppContext.Provider
+        value={{
+          board,
+          setBoard,
+          currAttempt,
+          setCurrAttempt,
+          correctWord,
+          onSelectLetter,
+          onDelete,
+          onEnter,
+          setDisabledLetters,
+          disabledLetters,
+          gameOver,
+        }}>
+
         <div className="game">
-          <Board /> {/* Board(Grid) Compo */}
+          <Board />
           {gameOver.gameOver ? <GameOver /> : <Keyboard />}
         </div>
+
       </AppContext.Provider>
-
-
     </div>
   );
 }
